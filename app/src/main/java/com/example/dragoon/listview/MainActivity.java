@@ -14,6 +14,10 @@ import com.example.dragoon.listview.adapter.ListviewAdapter;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
     private ListviewAdapter listviewAdapter;
     private List<Informations> list;
     String AllIMustKnow="{";
+    JSONArray array=new JSONArray();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -77,30 +82,12 @@ public class MainActivity extends AppCompatActivity {
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                int i=1 ;
-                if(i==1) {
-                    list.add(new Informations(i, nameText.getText().toString()));
-                }
-                    if (AllIMustKnow.charAt(AllIMustKnow.length() - 1) == '}') {
-                        AllIMustKnow = AllIMustKnow.replace(AllIMustKnow.substring(AllIMustKnow.length() - 1), "");
-                        i++;
-                    if (AllIMustKnow.charAt(AllIMustKnow.length() - 1) == '{') {
-                        AllIMustKnow += i + nameText.getText().toString() + "}";
-
-                    } else {
-                        AllIMustKnow += i + "," + nameText.getText().toString() + "}";
-                        textView.setText(AllIMustKnow);
-                    }
-
-                    Toast.makeText(getApplicationContext(), "Login details are saved..", Toast.LENGTH_SHORT).show();
-
-                    listviewAdapter = new ListviewAdapter(getApplicationContext(), list);
-                    personView.setAdapter(listviewAdapter);
-                    i++;
+                array.put(writeJSON( nameText.getText().toString()));
+                Toast.makeText(MainActivity.this, array.toString(), Toast.LENGTH_SHORT).show();
 
 
 
-                }
+
 
             }
         });
@@ -108,13 +95,30 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
+    public JSONObject writeJSON(String name) {
+        JSONObject object = new JSONObject();
+        try {
+            object.put("name", name);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+     return object;
+    }
+
+    public void loadJson(String value) {
+        JSONArray jsonarray = null;
+        try {
+            jsonarray = new JSONArray(value);
+            for (int i = 0; i < jsonarray.length(); i++) {
+                JSONObject jsonobject = jsonarray.getJSONObject(i);
+                String name = jsonobject.getString("name");
+
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+
 }
-
-              /*  SharedPreferences memory = getSharedPreferences("memory", 0);
-
-                SharedPreferences.Editor edit = memory.edit();
-
-
-                edit.commit();*/  /*ArrayList<Informations> yourData = new ArrayList<Informations>();
-                String dataStr = new Gson().toJson(AllIMustKnow);
-                */
