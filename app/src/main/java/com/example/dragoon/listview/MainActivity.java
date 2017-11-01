@@ -45,12 +45,10 @@ public class MainActivity extends AppCompatActivity {
         personView= (ListView) findViewById(R.id.listview);
         list= new ArrayList<>();
 
-
-
         SharedPreferences userDetails = getApplicationContext().getSharedPreferences("userdetails", MODE_PRIVATE);
         String name = userDetails.getString("name", "");
         loadJson(name);
-
+        updateList();
 
 
 
@@ -78,13 +76,13 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 SharedPreferences userDetails = getApplicationContext().getSharedPreferences("userdetails", MODE_PRIVATE);
                 SharedPreferences.Editor edit = userDetails.edit();
-
+                list.clear();
                 array.put(writeJSON( nameText.getText().toString()));
                 edit.putString("name", array.toString());
 
                 edit.commit();
                 Toast.makeText(MainActivity.this, array.toString(), Toast.LENGTH_SHORT).show();
-
+                updateList();
 
             }
         });
@@ -92,12 +90,22 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
+
+    private void updateList() {
+        listviewAdapter = new ListviewAdapter(getApplicationContext(), list);
+        personView.setAdapter(listviewAdapter);
+
+    }
+
     public JSONObject writeJSON(String name) {
         JSONObject object = new JSONObject();
         try {
+
             int id = array.length();
             object.put("id",id);
             object.put("name", name);
+            Informations information = new Informations(id, name);
+            list.add(information);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -115,8 +123,7 @@ public class MainActivity extends AppCompatActivity {
                 int id = jsonobject.getInt("id");
                 Informations information = new Informations(id, name);
                 list.add(information);
-                listviewAdapter = new ListviewAdapter(getApplicationContext(), list);
-                personView.setAdapter(listviewAdapter);
+
             }
         } catch (JSONException e) {
             e.printStackTrace();
