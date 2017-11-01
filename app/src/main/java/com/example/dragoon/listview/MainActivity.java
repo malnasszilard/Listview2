@@ -47,6 +47,10 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+        SharedPreferences userDetails = getApplicationContext().getSharedPreferences("userdetails", MODE_PRIVATE);
+        String name = userDetails.getString("name", "");
+        loadJson(name);
+
 
 
 
@@ -57,21 +61,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-              /*  String str = "";
-                int i;
-
-                Type type = new TypeToken<ArrayList<Informations>>() { }.getType();
-                ArrayList<Informations> restoreData = new Gson().fromJson(str, type);
-                if(str!="") {
-                    for (i = 0; i < restoreData.size(); i++)
-                        textView.setText(str);
-                }*/
-
-              //  listviewAdapter=new ListView(getApplicationContext(),AllIMustKnow);
-               // personView.setAdapter(listviewAdapter);
-
-
-
+                SharedPreferences userDetails = getApplicationContext().getSharedPreferences("userdetails", MODE_PRIVATE);
+                String name = userDetails.getString("name", "");
+                loadJson(name);
 
             }
         });
@@ -86,11 +78,14 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 SharedPreferences userDetails = getApplicationContext().getSharedPreferences("userdetails", MODE_PRIVATE);
                 SharedPreferences.Editor edit = userDetails.edit();
-                edit.putString("name",nameText.getText().toString());
+
+                array.put(writeJSON( nameText.getText().toString()));
+                edit.putString("name", array.toString());
 
                 edit.commit();
-                array.put(writeJSON( nameText.getText().toString()));
                 Toast.makeText(MainActivity.this, array.toString(), Toast.LENGTH_SHORT).show();
+
+
             }
         });
 
@@ -120,6 +115,8 @@ public class MainActivity extends AppCompatActivity {
                 int id = jsonobject.getInt("id");
                 Informations information = new Informations(id, name);
                 list.add(information);
+                listviewAdapter = new ListviewAdapter(getApplicationContext(), list);
+                personView.setAdapter(listviewAdapter);
             }
         } catch (JSONException e) {
             e.printStackTrace();
