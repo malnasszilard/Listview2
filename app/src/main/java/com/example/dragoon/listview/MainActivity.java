@@ -1,5 +1,6 @@
 package com.example.dragoon.listview;
 
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -26,12 +27,13 @@ public class MainActivity extends AppCompatActivity {
     private ListView personView;
     private ListviewAdapter listviewAdapter;
     private List<Informations> list;
-    String AllIMustKnow="{";
+
     JSONArray array=new JSONArray();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         final TextView textView;
         final EditText nameText;
 
@@ -82,13 +84,13 @@ public class MainActivity extends AppCompatActivity {
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                SharedPreferences userDetails = getApplicationContext().getSharedPreferences("userdetails", MODE_PRIVATE);
+                SharedPreferences.Editor edit = userDetails.edit();
+                edit.putString("name",nameText.getText().toString());
+
+                edit.commit();
                 array.put(writeJSON( nameText.getText().toString()));
                 Toast.makeText(MainActivity.this, array.toString(), Toast.LENGTH_SHORT).show();
-
-
-
-
-
             }
         });
 
@@ -98,6 +100,8 @@ public class MainActivity extends AppCompatActivity {
     public JSONObject writeJSON(String name) {
         JSONObject object = new JSONObject();
         try {
+            int id = array.length();
+            object.put("id",id);
             object.put("name", name);
         } catch (JSONException e) {
             e.printStackTrace();
@@ -106,19 +110,19 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void loadJson(String value) {
-        JSONArray jsonarray = null;
-        try {
-            jsonarray = new JSONArray(value);
-            for (int i = 0; i < jsonarray.length(); i++) {
-                JSONObject jsonobject = jsonarray.getJSONObject(i);
-                String name = jsonobject.getString("name");
 
+        try {
+
+            array = new JSONArray(value);
+            for (int i = 0; i < array.length(); i++) {
+                JSONObject jsonobject = array.getJSONObject(i);
+                String name = jsonobject.getString("name");
+                int id = jsonobject.getInt("id");
+                Informations information = new Informations(id, name);
+                list.add(information);
             }
         } catch (JSONException e) {
             e.printStackTrace();
         }
-
     }
-
-
 }
