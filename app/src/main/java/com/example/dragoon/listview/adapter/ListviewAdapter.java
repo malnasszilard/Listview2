@@ -42,9 +42,10 @@ public class ListviewAdapter extends BaseAdapter{
     public View getView(int position, View convertView, ViewGroup parent) {
         View view = View.inflate(context, R.layout.row,null);
         TextView name=view.findViewById(R.id.textView);
-
+        TextView info=view.findViewById(R.id.textView2);
 
         name.setText(list.get(position).getName());
+        info.setText(list.get(position).getInformation());
 
         view.setTag(list.get(position));
         return view;
