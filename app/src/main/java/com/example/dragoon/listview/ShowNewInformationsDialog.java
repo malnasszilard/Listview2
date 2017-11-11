@@ -30,8 +30,6 @@ public class ShowNewInformationsDialog extends Dialog {
             public void onClick(View v) {
                 EditText name = findViewById(R.id.editText3);
                 EditText information = findViewById(R.id.editText4);
-                //new NewItem(name.getText().toString(),information.getText().toString(),context);
-
                 informations.setName(name.getText().toString());
                 informations.setInformation(information.getText().toString());
                 try {
@@ -46,6 +44,5 @@ public class ShowNewInformationsDialog extends Dialog {
 
 
     }
-
 }
 

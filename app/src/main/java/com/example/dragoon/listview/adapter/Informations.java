@@ -12,7 +12,9 @@ public class Informations {
     private int id;
     private String name;
     private String information;
-
+    public static final String USER_NAME = "name";
+    public static final String USER_Information = "information";
+    public static final String USER_Id = "id";
     public Informations(int id, String name,String information) {
         this.id = id;
         this.name = name;
@@ -43,9 +45,9 @@ public class Informations {
 
     public JSONObject toJsonObject() throws JSONException{
         JSONObject object = new JSONObject();
-        object.put("id", id);
-        object.put("name", name);
-        object.put("informations", information);
+        object.put(USER_Id, id);
+        object.put(USER_NAME, name);
+        object.put(USER_Information, information);
         return object;
     }
 
