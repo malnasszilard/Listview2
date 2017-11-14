@@ -45,11 +45,11 @@
         android:layout_height="50dp"
         android:layout_below="@+id/editText3"
         android:layout_marginTop="31dp"
-        android:layout_toLeftOf="@+id/saveButton"
-        android:layout_toStartOf="@+id/saveButton" />
+        android:layout_toLeftOf="@+id/saveButton1"
+        android:layout_toStartOf="@+id/saveButton1" />
 
     <Button
-        android:id="@+id/saveButton"
+        android:id="@+id/saveButton1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"

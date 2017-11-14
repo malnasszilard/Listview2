@@ -24,7 +24,7 @@ public class ShowNewInformationsDialog extends Dialog {
         super(context);
         setContentView(R.layout.dialog_changeinfo);
         show();
-        Button saveItem =findViewById(R.id.saveButton);
+        Button saveItem =findViewById(R.id.saveButton1);
         final EditText name = findViewById(R.id.editText3);
         final EditText information = findViewById(R.id.editText4);
         name.setText(informations.getName());

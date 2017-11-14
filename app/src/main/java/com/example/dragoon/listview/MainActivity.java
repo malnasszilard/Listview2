@@ -8,7 +8,6 @@ import android.content.SharedPreferences;
 import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;
@@ -86,8 +85,6 @@ public class MainActivity extends AppCompatActivity implements ShowNewInformatio
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        updateArray();
-
     }
 
 
@@ -138,7 +135,6 @@ public class MainActivity extends AppCompatActivity implements ShowNewInformatio
 
 
     private void updateArray() {
-
         userDetails = getApplicationContext().getSharedPreferences(PREFERENCES_NAME, MODE_PRIVATE);
         SharedPreferences.Editor edit = userDetails.edit();
         array.put(writeJSON(nameText.getText().toString(), informations.getText().toString()));
