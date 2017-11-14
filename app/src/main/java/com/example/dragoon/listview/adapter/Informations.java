@@ -12,9 +12,11 @@ public class Informations {
     private int id;
     private String name;
     private String information;
+
     public static final String USER_NAME = "name";
     public static final String USER_Information = "information";
     public static final String USER_Id = "id";
+
     public Informations(int id, String name,String information) {
         this.id = id;
         this.name = name;

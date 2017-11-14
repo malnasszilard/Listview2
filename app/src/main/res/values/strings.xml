@@ -1,3 +1,5 @@
 <resources>
-    <string name="app_name">Listview</string>
+    <string name="app_name">Remember You!</string>
+    <string name="lbl_search">search</string>
+
 </resources>

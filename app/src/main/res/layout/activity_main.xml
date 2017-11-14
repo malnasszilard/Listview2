@@ -5,14 +5,22 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.example.dragoon.listview.MainActivity"
-    android:gravity="bottom">
+    android:gravity="bottom"
+    android:layout_margin="20dp">
+
+    <TextView
+        android:id="@+id/item"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 
 
     <EditText
         android:id="@+id/editText2"
-        android:layout_width="175dp"
+        android:layout_width="170dp"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
+        android:layout_toEndOf="@+id/textView4"
+        android:layout_toRightOf="@+id/textView4"
         android:ems="10"
         android:inputType="textPersonName"
         tools:layout_editor_absoluteX="0dp"
@@ -20,11 +28,13 @@
 
     <EditText
         android:id="@+id/editText"
-        android:layout_width="175dp"
+        android:layout_width="170dp"
         android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
+        android:layout_alignEnd="@+id/editText2"
+        android:layout_alignRight="@+id/editText2"
+        android:layout_below="@+id/editText2"
+        android:layout_toEndOf="@+id/textView4"
+        android:layout_toRightOf="@+id/textView4"
         android:ems="10"
         android:inputType="textPersonName"
         tools:layout_editor_absoluteX="0dp"
@@ -32,43 +42,49 @@
 
     <Button
         android:id="@+id/saveButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
+        style="@style/Widget.AppCompat.Button"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_alignBottom="@+id/editText"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
-        android:text="Save" />
+        android:layout_below="@+id/editText2"
+        android:text="Save"
+        android:textColor="@color/colorPrimaryDark" />
 
     <ListView
         android:id="@+id/listview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/saveButton"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/editText2"
+        android:layout_below="@+id/editText"
         android:cacheColorHint="@color/colorPrimary"
         android:visibility="visible" />
 
-    <Button
-        android:id="@+id/loadButton"
+    <TextView
+        android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignTop="@+id/saveButton"
-        android:text="Load" />
+        android:layout_alignParentTop="true"
+        android:layout_toEndOf="@+id/item"
+        android:layout_toLeftOf="@+id/editText2"
+        android:layout_toRightOf="@+id/item"
+        android:layout_toStartOf="@+id/editText2"
+        android:text="Name:"
+        android:textAppearance="@style/TextAppearance.AppCompat"
+        android:textColor="@color/colorPrimaryDark" />
 
-    <SearchView
-        android:id="@+id/searchText"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
-        android:layout_below="@+id/listview"
-        android:layout_marginLeft="17dp"
-        android:layout_marginStart="17dp"
-        android:layout_marginTop="12dp"
-        android:gravity="center"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="10dp"/>
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/editText2"
+        android:layout_toEndOf="@+id/item"
+        android:layout_toRightOf="@+id/item"
+        android:text="Information:"
+        android:textAllCaps="false"
+        android:textAppearance="@style/TextAppearance.AppCompat"
+        android:textColor="@color/colorPrimaryDark" />
 
 </RelativeLayout>
