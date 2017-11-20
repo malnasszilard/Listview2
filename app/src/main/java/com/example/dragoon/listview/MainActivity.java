@@ -12,7 +12,6 @@ import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.SearchView;
 import com.example.dragoon.listview.adapter.Informations;
@@ -35,7 +34,6 @@ public class MainActivity extends AppCompatActivity implements ShowNewInformatio
     private ListView personView;
     private ListviewAdapter listviewAdapter;
     private List<Informations> list;
-    EditText nameText, informations;
     Button save;
     JSONArray array = new JSONArray();
     Context context = this;
@@ -46,8 +44,6 @@ public class MainActivity extends AppCompatActivity implements ShowNewInformatio
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        nameText = findViewById(R.id.editText2);
-        informations = findViewById(R.id.editText);
         save = findViewById(R.id.saveButton);
         personView = findViewById(R.id.listview);
         list = new ArrayList<>();
@@ -69,17 +65,53 @@ public class MainActivity extends AppCompatActivity implements ShowNewInformatio
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                updateArray();
+                Informations information = new Informations(list.size(), "", "");
+                list.add(information);
+                try {
+                    array.put(list.size() - 1, information.toJsonObject());
+                    updateList();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                showNewinformationsDialog(list.get(list.size() - 1));
+                // updateArray();
             }
         });
     }
 
+
     @Override
     public void onItemSaved(Informations informations) {
         try {
-            for (int i = 0; i < array.length()-1; i++) {
+            userDetails = getApplicationContext().getSharedPreferences(PREFERENCES_NAME, MODE_PRIVATE);
+            SharedPreferences.Editor edit = userDetails.edit();
+            for (int i = 0; i < array.length() ; i++) {
                 if (((JSONObject) array.get(i)).getInt(USER_Id) == informations.getId()) {
                     array.put(i, informations.toJsonObject());
+                    edit.putString(TAG, array.toString());
+                    edit.commit();
+
+                    if (i == array.length()) {
+
+                        JSONObject object = new JSONObject();
+                        try {
+                            int id = array.length();
+                            String name=((JSONObject) array.get(i)).getString(USER_NAME) ;
+                            String info=((JSONObject) array.get(i)).getString(USER_Information);
+                            object.put(USER_Id, id);
+                            object.put(USER_NAME,name );
+                            object.put(USER_Information, info);
+                            Informations information = new Informations(id, name, info);
+                            list.add(information);
+                            array.put(object);
+                            edit.putString(TAG, array.toString());
+                            edit.commit();
+                            //updateList();
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                        //loadJson(TAG);
+                    }
                 }
             }
         } catch (JSONException e) {
@@ -88,22 +120,22 @@ public class MainActivity extends AppCompatActivity implements ShowNewInformatio
     }
 
 
-    public JSONObject writeJSON(String name, String info) {
-        JSONObject object = new JSONObject();
-        try {
-            int id = array.length();
-            object.put(USER_Id, id);
-            object.put(USER_NAME, name);
-            object.put(USER_Information, info);
-            Informations information = new Informations(id, name, info);
-            list.add(information);
-            updateList();
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        return object;
-    }
-
+    /* public JSONObject writeJSON(String name, String info) {
+         JSONObject object = new JSONObject();
+         try {
+             int id = array.length();
+             object.put(USER_Id, id);
+             object.put(USER_NAME, name);
+             object.put(USER_Information, info);
+             Informations information = new Informations(id, name, info);
+             list.add(information);
+             updateList();
+         } catch (JSONException e) {
+             e.printStackTrace();
+         }
+         return object;
+     }
+ */
     public void loadJson(String value) {
         updateList();
         try {
@@ -124,8 +156,6 @@ public class MainActivity extends AppCompatActivity implements ShowNewInformatio
 
     private void showNewinformationsDialog(Informations informations) {
         Dialog dialog = new ShowNewInformationsDialog(context, this, informations);
-
-
     }
 
     private void updateList() {
@@ -134,13 +164,13 @@ public class MainActivity extends AppCompatActivity implements ShowNewInformatio
     }
 
 
-    private void updateArray() {
+    /*private void updateArray() {
         userDetails = getApplicationContext().getSharedPreferences(PREFERENCES_NAME, MODE_PRIVATE);
         SharedPreferences.Editor edit = userDetails.edit();
         array.put(writeJSON(nameText.getText().toString(), informations.getText().toString()));
         edit.putString(TAG, array.toString());
         edit.commit();
-    }
+    }*/
 
 
     @Override
