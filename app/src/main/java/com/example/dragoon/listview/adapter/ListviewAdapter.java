@@ -2,10 +2,12 @@ package com.example.dragoon.listview.adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.text.TextUtils;
 import android.util.TypedValue;
+import android.view.Display;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -59,16 +61,11 @@ public class ListviewAdapter extends BaseAdapter implements Filterable {
         ImageView imageView =view.findViewById(R.id.imageView);
         name.setText(getInformationList().get(position).getName());
         info.setText(getInformationList().get(position).getInformation());
-
         Random rnd = new Random();
         int color = Color.argb(255, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256));
-        imageView.setColorFilter(color);
-       // GradientDrawable gd = (GradientDrawable) imageView.getBackground();
-        //gd.setColor(color);
-       // gd.setGradientType(color);
-        //int width_px = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, youStrokeWidth, getResources().getDisplayMetrics());
-       // gd.setStroke(width_px, color);
-
+       // imageView.setBackgroundColor(color);
+        //imageView.setColorFilter(color);
+        imageView.setDrawingCacheBackgroundColor(color);
         view.setTag(getInformationList().get(position));
         return view;
     }
@@ -86,7 +83,6 @@ public class ListviewAdapter extends BaseAdapter implements Filterable {
 
 
     private Filter filter = new Filter() {
-
         @SuppressWarnings("unchecked")
         @Override
         protected void publishResults(CharSequence constraint, FilterResults results) {

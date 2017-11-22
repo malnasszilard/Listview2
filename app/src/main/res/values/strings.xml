@@ -2,5 +2,6 @@
     <string name="app_name">Remember You!</string>
     <string name="lbl_search">search</string>
     <string name="lbl_changeinf">Change Information</string>
+    <string name="lbl_change_information">Change Information!</string>
 
 </resources>

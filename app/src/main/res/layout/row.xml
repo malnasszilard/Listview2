@@ -2,21 +2,16 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-
-    >
+    android:layout_marginEnd="44dp">
 
     <LinearLayout
         android:id="@+id/linearLayout2"
         android:layout_width="1dp"
         android:layout_height="90dp"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginLeft="16dp"
-        android:layout_marginStart="16dp"
+        android:layout_marginLeft="14dp"
+        android:layout_marginStart="14dp"
         android:background="@color/colorPrimary"
         android:orientation="vertical"></LinearLayout>
 
@@ -24,10 +19,8 @@
         android:id="@+id/textView"
         android:layout_width="match_parent"
         android:layout_height="30dp"
-        android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_marginLeft="34dp"
         android:layout_marginStart="34dp"
         android:layout_marginTop="10dp"
         android:textColor="@color/colorPrimaryDark" />
@@ -36,19 +29,28 @@
         android:id="@+id/textView2"
         android:layout_width="match_parent"
         android:layout_height="30dp"
-        android:layout_alignLeft="@+id/textView"
         android:layout_alignStart="@+id/textView"
         android:layout_below="@+id/textView"
         android:layout_marginTop="12dp"
-        android:textColor="@color/colorPrimaryDark" />
+        android:textColor="@color/colorPrimaryDark"
+        android:visibility="visible" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout3"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_alignStart="@+id/linearLayout2"
+        android:layout_below="@+id/linearLayout2"
+        android:background="@drawable/circle"
+        android:orientation="horizontal"></LinearLayout>
 
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="30dp"
         android:layout_height="30dp"
-        android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_alignTop="@+id/textView"
+        android:visibility="visible"
         app:srcCompat="@drawable/circle" />
 
 </RelativeLayout>

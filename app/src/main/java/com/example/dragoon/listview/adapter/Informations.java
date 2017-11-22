@@ -1,5 +1,7 @@
 package com.example.dragoon.listview.adapter;
 
+import android.widget.ImageView;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -12,6 +14,7 @@ public class Informations {
     private int id;
     private String name;
     private String information;
+
 
     public static final String USER_NAME = "name";
     public static final String USER_Information = "information";
