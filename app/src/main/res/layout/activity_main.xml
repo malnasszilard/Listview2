@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -14,27 +15,24 @@
         android:layout_alignParentTop="true" />
 
 
-    <Button
-        android:id="@+id/saveButton"
-        style="@style/Widget.AppCompat.Button"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:text="Save"
-        android:textColor="@color/colorPrimaryDark" />
-
     <ListView
         android:id="@+id/listview"
         style="@style/Widget.AppCompat.Light.ListView.DropDown"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-
-        android:layout_above="@+id/saveButton"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
+        android:layout_above="@+id/addImage"
+        android:layout_toEndOf="@+id/item"
+        android:layout_toRightOf="@+id/item"
         android:cacheColorHint="@color/colorPrimary"
         android:visibility="visible" />
+
+    <ImageView
+        android:id="@+id/addImage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        app:srcCompat="@drawable/ic_add_circle_indigo_600_48dp" />
 
 </RelativeLayout>

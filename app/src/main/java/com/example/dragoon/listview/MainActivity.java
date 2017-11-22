@@ -1,24 +1,32 @@
 package com.example.dragoon.listview;
 
+import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.Dialog;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
+import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SearchView;
+import android.widget.Toast;
+
 import com.example.dragoon.listview.adapter.Informations;
 import com.example.dragoon.listview.adapter.ListviewAdapter;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,7 +42,6 @@ public class MainActivity extends AppCompatActivity implements ShowNewInformatio
     private ListView personView;
     private ListviewAdapter listviewAdapter;
     private List<Informations> list;
-    Button save;
     JSONArray array = new JSONArray();
     Context context = this;
     private Menu menu;
@@ -44,27 +51,17 @@ public class MainActivity extends AppCompatActivity implements ShowNewInformatio
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        save = findViewById(R.id.saveButton);
         personView = findViewById(R.id.listview);
+        ImageView addImage;
+        addImage = findViewById(R.id.addImage);
         list = new ArrayList<>();
         userDetails = getApplicationContext().getSharedPreferences(PREFERENCES_NAME, MODE_PRIVATE);
         String rawJSON = userDetails.getString(TAG, "");
         loadJson(rawJSON);
         updateList();
-
-        personView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        addImage.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-                SharedPreferences.Editor editor = userDetails.edit();
-                editor.putInt(USER_Id, position);
-                editor.commit();
-                showNewinformationsDialog(list.get(position));
-            }
-        });
-
-        save.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+            public void onClick(View v) {
                 Informations information = new Informations(list.size(), "", "");
                 list.add(information);
                 try {
@@ -74,43 +71,47 @@ public class MainActivity extends AppCompatActivity implements ShowNewInformatio
                     e.printStackTrace();
                 }
                 showNewinformationsDialog(list.get(list.size() - 1));
-                // updateArray();
+            }
+        });
+        personView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @SuppressLint("WrongConstant")
+            @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+                showNewinformationsDialog(listviewAdapter.getInformationList().get(position));
             }
         });
     }
 
 
     @Override
-    public void onItemSaved(Informations informations) {
+    public void onDialogItemSaved(Informations informations) {
         try {
             userDetails = getApplicationContext().getSharedPreferences(PREFERENCES_NAME, MODE_PRIVATE);
             SharedPreferences.Editor edit = userDetails.edit();
-            for (int i = 0; i < array.length() ; i++) {
+            for (int i = 0; i < array.length(); i++) {
                 if (((JSONObject) array.get(i)).getInt(USER_Id) == informations.getId()) {
                     array.put(i, informations.toJsonObject());
                     edit.putString(TAG, array.toString());
                     edit.commit();
 
                     if (i == array.length()) {
-
                         JSONObject object = new JSONObject();
                         try {
                             int id = array.length();
-                            String name=((JSONObject) array.get(i)).getString(USER_NAME) ;
-                            String info=((JSONObject) array.get(i)).getString(USER_Information);
+                            String name = ((JSONObject) array.get(i)).getString(USER_NAME);
+                            String info = ((JSONObject) array.get(i)).getString(USER_Information);
                             object.put(USER_Id, id);
-                            object.put(USER_NAME,name );
+                            object.put(USER_NAME, name);
                             object.put(USER_Information, info);
                             Informations information = new Informations(id, name, info);
                             list.add(information);
                             array.put(object);
                             edit.putString(TAG, array.toString());
                             edit.commit();
-                            //updateList();
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
-                        //loadJson(TAG);
                     }
                 }
             }
@@ -119,23 +120,6 @@ public class MainActivity extends AppCompatActivity implements ShowNewInformatio
         }
     }
 
-
-    /* public JSONObject writeJSON(String name, String info) {
-         JSONObject object = new JSONObject();
-         try {
-             int id = array.length();
-             object.put(USER_Id, id);
-             object.put(USER_NAME, name);
-             object.put(USER_Information, info);
-             Informations information = new Informations(id, name, info);
-             list.add(information);
-             updateList();
-         } catch (JSONException e) {
-             e.printStackTrace();
-         }
-         return object;
-     }
- */
     public void loadJson(String value) {
         updateList();
         try {
@@ -156,21 +140,13 @@ public class MainActivity extends AppCompatActivity implements ShowNewInformatio
 
     private void showNewinformationsDialog(Informations informations) {
         Dialog dialog = new ShowNewInformationsDialog(context, this, informations);
+        dialog.show();
     }
 
     private void updateList() {
         listviewAdapter = new ListviewAdapter(getApplicationContext(), list);
         personView.setAdapter(listviewAdapter);
     }
-
-
-    /*private void updateArray() {
-        userDetails = getApplicationContext().getSharedPreferences(PREFERENCES_NAME, MODE_PRIVATE);
-        SharedPreferences.Editor edit = userDetails.edit();
-        array.put(writeJSON(nameText.getText().toString(), informations.getText().toString()));
-        edit.putString(TAG, array.toString());
-        edit.commit();
-    }*/
 
 
     @Override
