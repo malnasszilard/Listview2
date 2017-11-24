@@ -58,14 +58,14 @@ public class ListviewAdapter extends BaseAdapter implements Filterable {
         View view = View.inflate(context, R.layout.row, null);
         TextView name = view.findViewById(R.id.textView);
         TextView info = view.findViewById(R.id.textView2);
-        ImageView imageView =view.findViewById(R.id.imageView);
+        ImageView imageView = view.findViewById(R.id.adapterCircleImageView);
         name.setText(getInformationList().get(position).getName());
         info.setText(getInformationList().get(position).getInformation());
         Random rnd = new Random();
         int color = Color.argb(255, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256));
-       // imageView.setBackgroundColor(color);
-        //imageView.setColorFilter(color);
-        imageView.setDrawingCacheBackgroundColor(color);
+        // imageView.setBackgroundColor(color);
+        imageView.setColorFilter(color);
+        //imageView.setDrawingCacheBackgroundColor(color);
         view.setTag(getInformationList().get(position));
         return view;
     }

@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.dragoon.listview.MainActivity"
-    android:gravity="bottom"
-    android:layout_margin="20dp">
+    tools:context="com.example.dragoon.listview.MainActivity">
 
     <TextView
         android:id="@+id/item"
@@ -20,19 +18,19 @@
         style="@style/Widget.AppCompat.Light.ListView.DropDown"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/addImage"
         android:layout_toEndOf="@+id/item"
         android:layout_toRightOf="@+id/item"
         android:cacheColorHint="@color/colorPrimary"
         android:visibility="visible" />
 
-    <ImageView
+
+    <android.support.design.widget.FloatingActionButton
         android:id="@+id/addImage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        app:srcCompat="@drawable/ic_add_circle_indigo_600_48dp" />
+        app:fabSize="normal"
+        android:layout_gravity="bottom|right"
+        android:layout_margin="20dp"
+        android:src="@drawable/ic_plus_one_black_48dp"/>
 
-</RelativeLayout>
+</android.support.design.widget.CoordinatorLayout>
