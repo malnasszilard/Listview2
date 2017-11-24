@@ -31,10 +31,10 @@ public class ShowNewInformationsDialog extends Dialog {
         final EditText information = findViewById(R.id.editText4);
         name.setText(informations.getName());
         information.setText(informations.getInformation());
+
         saveItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 informations.setName(name.getText().toString());
                 informations.setInformation(information.getText().toString());
                 try {

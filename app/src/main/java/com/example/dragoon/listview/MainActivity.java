@@ -62,25 +62,30 @@ public class MainActivity extends AppCompatActivity implements ShowNewInformatio
         addImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Informations information = new Informations(list.size(), "", "");
-                list.add(information);
-                try {
-                    array.put(list.size() - 1, information.toJsonObject());
-                    updateList();
-                } catch (JSONException e) {
-                    e.printStackTrace();
+                if (list.get(list.size() - 1).getName().equals("") && list.get(list.size() - 1).getInformation().equals("")) {
+                    showNewinformationsDialog(list.get(list.size() - 1));
+                } else {
+                    Informations information = new Informations(list.size(), "", "");
+                    list.add(information);
+                    try {
+                        array.put(list.size() - 1, information.toJsonObject());
+                        updateList();
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    showNewinformationsDialog(list.get(list.size() - 1));
                 }
-                showNewinformationsDialog(list.get(list.size() - 1));
             }
         });
+
         personView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @SuppressLint("WrongConstant")
             @RequiresApi(api = Build.VERSION_CODES.KITKAT)
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
                 showNewinformationsDialog(listviewAdapter.getInformationList().get(position));
             }
         });
+
     }
 
 
@@ -141,6 +146,7 @@ public class MainActivity extends AppCompatActivity implements ShowNewInformatio
     private void showNewinformationsDialog(Informations informations) {
         Dialog dialog = new ShowNewInformationsDialog(context, this, informations);
         dialog.show();
+       updateList();
     }
 
     private void updateList() {
